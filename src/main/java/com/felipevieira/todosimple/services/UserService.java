@@ -2,14 +2,12 @@ package com.felipevieira.todosimple.services;
 
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.felipevieira.todosimple.models.User;
-import com.felipevieira.todosimple.repositories.TaskRepository;
+
 import com.felipevieira.todosimple.repositories.UserRepository;
 
 @Service
@@ -17,9 +15,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private TaskRepository taskRepository;
 
     /**
      * @param id
@@ -36,7 +31,7 @@ public class UserService {
     public User create(User obj) {
         obj.setId(null);
         obj = this.userRepository.save(obj);
-        this.taskRepository.saveAll(obj.getTasks());
+
         return obj;
     }
 
@@ -54,7 +49,7 @@ public class UserService {
             this.userRepository.deleteById(id);
 
         } catch (Exception e) {
-            throw new RuntimeException("Não é possível. Há entidades relacionadas");
+            throw new RuntimeException("Não é possível deletar. Há entidades relacionadas");
         }
     }
 }
