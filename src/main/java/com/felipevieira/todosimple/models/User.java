@@ -43,7 +43,7 @@ public class User {
     private String username;
 
     @JsonProperty(access = Access.WRITE_ONLY)
-    @Column(name = "pas sword", length = 60, nullable = false)
+    @Column(name = "password", length = 60, nullable = false)
     @NotNull(groups = { CreateUser.class, UpdateUser.class })
     @NotEmpty(groups = { CreateUser.class, UpdateUser.class })
     @Size(groups = { CreateUser.class, UpdateUser.class }, min = 8, max = 60)
