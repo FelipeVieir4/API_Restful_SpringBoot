@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.felipevieira.todosimple.repositories.TaskRepository;
+import com.felipevieira.todosimple.services.exceptions.DataBindingViolationException;
 
 @Service
 public class TaskService {
@@ -22,7 +23,7 @@ public class TaskService {
         Optional<Task> task = this.taskRepository.findById(id);
 
         return task.orElseThrow(
-                () -> new RuntimeException("Task não encontrada! id:" + id + ", tipo: " + Task.class.getName()));
+                () -> new DataBindingViolationException("Task não encontrada! id:" + id + ", tipo: " + Task.class.getName()));
     }
 
     public List<Task> findAllByUserId(Long userId){
@@ -52,7 +53,7 @@ public class TaskService {
         try {
             this.taskRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possível deletar. Há entidades relacionadas");
+            throw new DataBindingViolationException("Não é possível deletar. Há entidades relacionadas");
         }
     }
 
